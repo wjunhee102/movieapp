@@ -1,5 +1,6 @@
 import { createStore } from "redux";
 
+
 const ADD = "add";
 const CHECK = "check";
 const DELETE = "delete";
@@ -11,7 +12,7 @@ const dataAdd = data => {
     }
 }
 const callCheck = () => {
-    date = new Date
+    const date = new Date
     return {
         type : CHECK,
         date
@@ -19,29 +20,57 @@ const callCheck = () => {
 }
 
 const mReducer = ( state, action ) => {
+    const preDate = localStorage.getItem("date");
     switch(action) {
         case ADD :
         const newState = action.data;
         localStorage("data", JSON.stringify(newState));
         return newState;
-        case CHECK :
-        const preDate = localStorage.getItem("date");
-        if(!preDate) {
-            localStorage.setItem("date", action.date);
-        }
         default :
-        state = {
-            data : null,
-            date : new Date
+        const date = new Date;
+        const nowDate = {
+            year : date.getFullYear(),
+            month : () => {
+                if(date.getMonth() <= 9) {
+                    return `0${date.getMonth()+1}`
+                }
+                    return date.getMonth()+1
+            },
+            day : () => {
+                if(date.getDate() <= 10) {
+                    return `0${date.getDate()}`
+                }
+                    return date.getDate()
+            }
         }
+
+        const nowDay = `${nowDate.year}${nowDate.month()}${nowDate.day()}`
+        if(preDate && preDate !== nowDay) {
+            state = {
+                data : null,
+                date : nowDay,
+                refresh : true
+            }
+        } else {
+            state = {
+                data : null,
+                date : preDate,
+                refresh : false
+            }
+        }
+        localStorage.setItem("data", JSON.stringify(state.data))
+        localStorage.setItem("date", state.date);
+        localStorage.setItem("refresh", state.refresh);
+        console.log(state);
         return state
     }
 }  
 
 
-
-export const movieStore = createStore(mReducer,
+const movieStore = createStore(mReducer,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+
+export default movieStore;
 
 
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from "prop-types";
-import useCallData from '../hooks/useCallData';
+import useFetch from '../hooks/useFetch';
 
 function MovieList({cd,name, rank}) {
     useEffect(()=>{

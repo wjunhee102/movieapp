@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 
 function App() {
+  console.log(new Date)
   return (
     <div className="App">
       <header className="App-header">

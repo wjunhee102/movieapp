@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 
-function useFetch( url ) {
+function useFetch( url, state ) {
     const [ data, setData ] = useState([]);
     const [ error, setError ] = useState("");
     const [ isLoading, setLoading ] = useState(true);
@@ -21,15 +21,17 @@ function useFetch( url ) {
     }
 
     useEffect(()=> {
-        callData();
+
     },[]);
 } 
 
-const mapStateToProps = ()=> {
-
+const mapStateToProps = (state)=> {
+    return {
+        state : state
+    }
 }
 const mapDispatchToProps = ()=> {
-    
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(useFetch);
