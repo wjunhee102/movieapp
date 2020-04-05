@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { connect } from "react-redux";
 
 function useFetch( url, state ) {
     const [ data, setData ] = useState([]);
     const [ error, setError ] = useState("");
     const [ isLoading, setLoading ] = useState(true);
+    console.log(state)
 
     const callData = async() => {
         try {
@@ -21,17 +21,9 @@ function useFetch( url, state ) {
     }
 
     useEffect(()=> {
-
+        callData()
     },[]);
+    return ({ data, error, isLoading, callData })
 } 
 
-const mapStateToProps = (state)=> {
-    return {
-        state : state
-    }
-}
-const mapDispatchToProps = ()=> {
-
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(useFetch);
+export default useFetch;

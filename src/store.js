@@ -23,8 +23,8 @@ const mReducer = ( state, action ) => {
     const preDate = localStorage.getItem("date");
     switch(action) {
         case ADD :
-        const newState = action.data;
-        localStorage("data", JSON.stringify(newState));
+        const newState = Object.assign({}, state, {data : action.data});
+        localStorage.setItem("data", JSON.stringify(newState.data));
         return newState;
         default :
         const date = new Date;
@@ -65,6 +65,11 @@ const mReducer = ( state, action ) => {
         return state
     }
 }  
+
+export const actionCreators = {
+    dataAdd,
+    callCheck
+}
 
 
 const movieStore = createStore(mReducer,

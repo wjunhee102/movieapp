@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import useFetch from '../hooks/useFetch';
+import { connect } from 'react-redux';
+import { dispatch } from 'rxjs/internal/observable/pairs';
 
 function MovieList({cd,name, rank}) {
     useEffect(()=>{
@@ -35,7 +37,7 @@ function Ticketing() {
             }
                 return date.getDate()-1
             } 
-    const { data, error, isLoading, callUrl } = useCallData(`http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${apikey}&targetDt=${Year}${Month()}${Day()}`);
+    const { data, error, isLoading, callData } = useFetch(`http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${apikey}&targetDt=${Year}${Month()}${Day()}`,null);
     const [ movieInfo , setMovieInfo ] = useState([]);
 
 
@@ -43,6 +45,7 @@ function Ticketing() {
     useEffect(()=>{
         // console.log(data)
         console.log(data.boxOfficeResult);
+        console.log(Month(),Day())
         // console.log(new Date)
         // console.log(Month(), Day()-1)
         // console.log(`${date.getFullYear()}${date.getMonth()+1}${date.getDate()}`);
@@ -73,4 +76,16 @@ function Ticketing() {
     )
 }
 
-export default Ticketing;
+const mapStateToProps = state => {
+    return {
+        state : state
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Ticketing);
