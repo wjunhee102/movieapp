@@ -17,118 +17,62 @@ const SeatingCount = state =>{
 
     const count = () => {
         let i = 0
-        let aaa = [];
+        let RandomNum = [];
     
         while(i < 10) {
-            let newAaa = [];
+            let newRandomNum = [];
             let randomNum = TheaterCount(5, 25);
             let num = Math.floor(randomNum);
             let mid = ()=> {
-                let i
-                if(aaa.length <= 3) {
-                    i = aaa.length -1
-                    if(i <= 0) {
-                        i = 0
+                let ii
+                if(RandomNum.length <= 3) {
+                    ii = RandomNum.length -1
+                    if(ii <= 0) {
+                        ii = 0
                     }
                 } else {
-                    i = Math.floor((aaa.length-1)/2)
+                    ii = Math.floor((RandomNum.length-1)/2)
                     console.log(i)
                 }
-                return i
+                return ii
             } ;
-            let midValue = aaa[mid()];
             
-            let minArray = []
-            let maxArray = []
+            let midValue = RandomNum[mid()];
 
-            if(!aaa[0]) {
-                newAaa = [num]
+            if(!RandomNum[0]) {
+                newRandomNum = [num]
             } else {
-                if( num <= aaa[0] || num >= aaa[aaa.length-1]) {
-                    if(num < aaa[0]) {
-                        newAaa = [num, ...aaa]
-                    } else if(num > aaa[aaa.length-1]){
-                        newAaa = [...aaa, num]
+                if( num <= RandomNum[0] || num >= RandomNum[RandomNum.length-1]) {
+                    if(num < RandomNum[0]) {
+                        newRandomNum = [num, ...RandomNum]
+                    } else if(num > RandomNum[RandomNum.length-1]){
+                        newRandomNum = [...RandomNum, num]
                     } else {
-                        newAaa = [...aaa]
+                        newRandomNum = [...RandomNum]
                     }
                 } else {
-                    newAaa = [aaa[0]]
-                    for(let i = 1; i < aaa.length; i++) {
-                        if(aaa[i-1] < num && num < aaa[i]) {
-                            newAaa = [...newAaa, num, aaa[i]]
+                    newRandomNum = [RandomNum[0]]
+                    for(let ii = 1; ii < RandomNum.length; ii++) {
+                        if(RandomNum[ii-1] < num && num < RandomNum[ii]) {
+                            newRandomNum = [...newRandomNum, num, RandomNum[ii]]
                         } else {
-                            newAaa = [...newAaa, aaa[i]]
+                            newRandomNum = [...newRandomNum, RandomNum[ii]]
                         }
                     }
                 }
             }
-
-            // if(!midValue) {
-            //     newAaa = [num]
-            // } else {
-            //     for(let iii = 0; iii < mid(); iii++) {
-            //         if(iii === 0) {
-            //             minArray = [aaa[iii]]
-            //         } else {
-            //             minArray = [...minArray, aaa[iii]];
-            //         }
-            //     }
-            //     for(let iii = mid(); iii < aaa.length; iii++) {
-            //         if(iii === mid()) {
-            //             maxArray = [aaa[mid()]]
-            //         } else {
-            //             maxArray = [...maxArray, aaa[iii]];
-            //         }
-            //     }
-    
-            //     if(num > midValue) {
-            //         if(num > aaa[aaa.length-1]) {
-            //             newAaa = [...aaa, num];
-            //         } else {
-            //             newAaa = minArray;
-            //             for(let ii = mid(); ii < aaa.length; ii++) {
-            //                 if(num < aaa[ii]) {
-            //                     newAaa = [...newAaa, num ,aaa[ii]]
-            //                 }  else {
-            //                     newAaa = [...newAaa, aaa[ii]];
-            //                 }
-            //             }
-            //         }
-            //     } else if(num < midValue) {
-            //         if(num < aaa[0]) {
-            //             newAaa = [num, ...aaa]
-            //         } else {
-            //             newAaa = maxArray;
-            //             for(let ii = mid()-1; ii <= 0; ii--) {
-            //                 if(num > aaa[ii]) {
-            //                     newAaa = [aaa[ii],num,...newAaa]
-            //                 } else {
-            //                     newAaa = [aaa[ii],...newAaa];
-            //                 }
-            //             }
-            //         }
-            //     } else {
-            //         newAaa = [...minArray, ...maxArray];
-            //     }
-            // }
             
-            console.log(minArray, maxArray, newAaa, mid(), midValue, num)
-            // console.log(aaa.length, midValue, mid());
-            aaa = newAaa;
-            // for(let ii = 0; ii < aaa.length; ii++) {
-            //     if(num === aaa[ii]) {
-                    
-            //     }
-            // }
+            console.log(newRandomNum, mid(), midValue, num)
+            
+            RandomNum = newRandomNum;
 
-            // const findValue = aaa.find(ele => ele == num)
-            // if(!findValue) aaa.push(num);
+            // const findValue = RandomNum.find(ele => ele == num)
+            // if(!findValue) RandomNum.push(num);
     
 
-            i = aaa.length;
+            i = RandomNum.length;
         }
-        setTSeat(aaa);
+        setTSeat(RandomNum);
     }
 
     useEffect(()=>{
