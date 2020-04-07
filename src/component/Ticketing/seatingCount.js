@@ -32,11 +32,10 @@ const SeatingCount = state =>{
                     }
                 } else {
                     ii = Math.floor((RandomNum.length-1)/2)
-                    console.log(i)
                 }
                 return ii
             } ;
-            
+
             let midValue = RandomNum[mid()];
 
             if(!RandomNum[0]) {
@@ -78,6 +77,7 @@ const SeatingCount = state =>{
     useEffect(()=>{
         count();
     },[])
+    
     useEffect(()=> {
         console.log(theaterSeat);
     },[theaterSeat])
