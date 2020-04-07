@@ -111,6 +111,84 @@ const SeatingCount = state =>{
         return RandomNum
     }
 
+    const count2 = (x) => {
+        let i = 0
+        let RandomNum = [];
+        let seats = Math.floor(TheaterCount(0, x));
+        while(i < seats) {
+            let newRandomNum = [];
+            let rNum = TheaterCount(0, x);
+            let num = Math.floor(rNum);
+
+            if(!RandomNum[0]) {
+                newRandomNum = [num]
+            } else {
+                if( num <= RandomNum[0] || num >= RandomNum[RandomNum.length-1]) {
+                    if(num < RandomNum[0]) {
+                        newRandomNum = [num, ...RandomNum]
+                    } else if(num > RandomNum[RandomNum.length-1]){
+                        newRandomNum = [...RandomNum, num]
+                    } else {
+                        newRandomNum = RandomNum
+                    }
+                } else {
+                    newRandomNum = [RandomNum[0]]
+                    let low, high, mid;
+                    low = 1;
+                    high = RandomNum.length-1;
+                    while(low <= high) {
+                        mid = (low + high)/2;
+                        if(low !== high) {
+                            if(num < RandomNum[mid]) {
+                                high -= 1
+                            } else if(num > RandomNum[mid]){
+                                low += 1
+                            } else if(num === RandomNum[mid]){
+                                newRandomNum = RandomNum
+                            }
+                        } else {
+
+                        }
+                    }
+                }
+            }
+            
+            // console.log(newRandomNum, mid(), midValue, num)
+            
+            RandomNum = newRandomNum;
+
+            // const findValue = RandomNum.find(ele => ele == num)
+            // if(!findValue) RandomNum.push(num);
+    
+
+            i = RandomNum.length;
+        }
+        // console.log(seats)
+        return RandomNum
+    }
+
+    function solution(array, commands) {
+        var answer = [];
+        var preArray = array;
+        var newArray = [];
+        for(var i = 0; i < commands[commands.length-1];i++){
+            if(commands[i]===3) {
+                console.log("3개의 명령어를 입력해주세요!");
+                return answer = null
+            }
+            var c1 = commands[i][0];
+            var c2 = commands[i][1];
+            var c3 = commands[i][2];
+            newArray = preArray.splice(c1,c2);
+            let NewAnswer = preArray.slice(c1, c2);
+            
+            preArray = newArray;
+            
+        }
+        
+        return answer;
+    }
+    
     const seating = async () => {
         let aaa = await Theater.map(ele => {
             console.log(ele.exp)
