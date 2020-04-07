@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 
-function useFetch( url, state ) {
-    const [ data, setData ] = useState([]);
+function useFetch( url, refresh) {
+    const [ data, setData ] = useState([1]);
     const [ error, setError ] = useState("");
     const [ isLoading, setLoading ] = useState(true);
-    console.log(state)
+    console.log(refresh);
 
     const callData = async() => {
         try {
@@ -20,9 +20,6 @@ function useFetch( url, state ) {
         }
     }
 
-    useEffect(()=> {
-        callData()
-    },[]);
     return ({ data, error, isLoading, callData })
 } 
 

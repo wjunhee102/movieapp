@@ -1,8 +1,7 @@
 import React from 'react';
-import Ticketing from './component/ticketing';
+import Ticketing from './component/Ticketing/home';
 
 function App() {
-  console.log(new Date)
   return (
     <div className="App">
       <Ticketing />

@@ -5,27 +5,47 @@ const ADD = "add";
 const CHECK = "check";
 const DELETE = "delete";
 
-const dataAdd = data => {
+const ADD_DATA = data => {
     return {
         type : ADD,
         data
     }
 }
-const callCheck = () => {
-    const date = new Date
+const CALL_CHECK = refresh => {
     return {
         type : CHECK,
-        date
+        refresh
     }
 }
 
 const mReducer = ( state, action ) => {
+
     const preDate = localStorage.getItem("date");
-    switch(action) {
+    const preData = JSON.parse(localStorage.getItem("data"));
+
+    console.log(preData)
+
+    switch(action.type) {
+    
         case ADD :
-        const newState = Object.assign({}, state, {data : action.data});
+        const newState = Object.assign({}, state, {
+            data : action.data
+        });
         localStorage.setItem("data", JSON.stringify(newState.data));
+        localStorage.setItem("refresh", newState.refresh)
+        console.log("실행됨");
+ 
         return newState;
+
+        case CHECK : 
+        const newCheck = Object.assign({}, state, {
+            refresh : action.refresh
+        })
+        localStorage.setItem("refresh", newCheck.refresh);
+        console.log("실행됨2");
+
+        return newCheck;
+
         default :
         const date = new Date;
         const nowDate = {
@@ -45,30 +65,30 @@ const mReducer = ( state, action ) => {
         }
 
         const nowDay = `${nowDate.year}${nowDate.month()}${nowDate.day()}`
-        if(preDate && preDate !== nowDay) {
+        if(!preData || preData[0] === 1 || preDate !== nowDay) {
             state = {
-                data : null,
+                data : [1],
                 date : nowDay,
                 refresh : true
             }
         } else {
             state = {
-                data : null,
+                data : preData,
                 date : preDate,
                 refresh : false
             }
         }
         localStorage.setItem("data", JSON.stringify(state.data))
         localStorage.setItem("date", state.date);
-        localStorage.setItem("refresh", state.refresh);
+        localStorage.setItem("refresh", state.refresh)
         console.log(state);
         return state
     }
 }  
 
 export const actionCreators = {
-    dataAdd,
-    callCheck
+    ADD_DATA,
+    CALL_CHECK
 }
 
 
