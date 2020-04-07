@@ -2,7 +2,43 @@ import { useState, useEffect } from 'react';
 
 const Theater = [
     {
-        name : "first",
+        rank : "1",
+        exp : 200
+    },
+    {
+        rank : "2",
+        exp : 175
+    },
+    {
+        rank : "3",
+        exp : 150
+    },
+    {
+        rank : "4",
+        exp : 120
+    },
+    {
+        rank : "5",
+        exp : 120
+    },
+    {
+        rank : "6",
+        exp : 100
+    },
+    {
+        rank : "7",
+        exp : 80
+    },
+    {
+        rank : "8",
+        exp : 70
+    },
+    {
+        rank : "9",
+        exp : 60
+    },
+    {
+        rank : "10",
         exp : 50
     }
 ]
@@ -15,13 +51,13 @@ const SeatingCount = state =>{
         return Math.random() * (max - min) + min;
       }
 
-    const count = () => {
+    const count = (x) => {
         let i = 0
         let RandomNum = [];
-    
-        while(i < 10) {
+        let seats = Math.floor(TheaterCount(0, x));
+        while(i < seats) {
             let newRandomNum = [];
-            let randomNum = TheaterCount(5, 25);
+            let randomNum = TheaterCount(0, x);
             let num = Math.floor(randomNum);
             let mid = ()=> {
                 let ii
@@ -61,7 +97,7 @@ const SeatingCount = state =>{
                 }
             }
             
-            console.log(newRandomNum, mid(), midValue, num)
+            // console.log(newRandomNum, mid(), midValue, num)
             
             RandomNum = newRandomNum;
 
@@ -71,13 +107,39 @@ const SeatingCount = state =>{
 
             i = RandomNum.length;
         }
-        setTSeat(RandomNum);
+        // console.log(seats)
+        return RandomNum
+    }
+
+    const seating = async () => {
+        let aaa = await Theater.map(ele => {
+            console.log(ele.exp)
+            count(ele.exp)
+        })
+        return {aaa};
     }
 
     useEffect(()=>{
-        count();
+        count(200);
+        let bbb = []
+        for(let i = 0; i < Theater.length; i++) {
+            if(!bbb[0]) {
+                bbb = [count(Theater[0].exp)]
+            } else {
+                bbb = [...bbb,count(Theater[i].exp)]
+            }
+        }
+        // const bbb = [
+        //     Theater.map(ele => {
+        //         console.log(ele.exp)
+        //         count(ele.exp)
+        //     })
+
+        // ]
+        // const {aaa} = seating();
+        setTSeat(bbb);
     },[])
-    
+
     useEffect(()=> {
         console.log(theaterSeat);
     },[theaterSeat])
