@@ -171,6 +171,7 @@ const SeatingCount = state =>{
         var answer = [];
         var preArray = array;
         var newArray = [];
+        console.log(preArray)
         for(var i = 0; i < commands[commands.length-1];i++){
             if(commands[i]===3) {
                 console.log("3개의 명령어를 입력해주세요!");
@@ -181,9 +182,15 @@ const SeatingCount = state =>{
             var c3 = commands[i][2];
             newArray = preArray.splice(c1,c2);
             let NewAnswer = preArray.slice(c1, c2);
+            if(!answer[0]) {
+                answer = [NewAnswer[c3-1]]
+            } else {
+                answer = [...answer, NewAnswer[c3-1]];
+            }
+            
             
             preArray = newArray;
-            
+            console.log(NewAnswer, answer);
         }
         
         return answer;
@@ -196,8 +203,10 @@ const SeatingCount = state =>{
         })
         return {aaa};
     }
-
+    const aaaaa = [1,2,4,7,5,8,10,15,45,23,12]
+    const bbbb = [[3,2,1], [2,3,2],[1,1,2]]
     useEffect(()=>{
+        solution(aaaaa,bbbb)
         count(200);
         let bbb = []
         for(let i = 0; i < Theater.length; i++) {
