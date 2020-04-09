@@ -56,7 +56,7 @@ const SeatingCount = state =>{
         let RandomNum = [];
         let seats = Math.floor(TheaterCount(0, x));
         while(i < seats) {
-            let newRandomNum = [];
+            let newRandomNum;
             let randomNum = TheaterCount(0, x);
             let num = Math.floor(randomNum);
             let mid = ()=> {
@@ -100,15 +100,25 @@ const SeatingCount = state =>{
             // console.log(newRandomNum, mid(), midValue, num)
             
             RandomNum = newRandomNum;
-
-            // const findValue = RandomNum.find(ele => ele == num)
-            // if(!findValue) RandomNum.push(num);
-    
+            // if(!RandomNum[0]) {
+            //     newRandomNum = [num]
+            //     RandomNum = newRandomNum;
+            // } else {
+            //     const findValue = RandomNum.find(ele => ele == num)
+            //     if(!findValue) {
+            //         newRandomNum = [...RandomNum, num];
+            //         RandomNum = newRandomNum;
+            //     } 
+            // }
 
             i = RandomNum.length;
         }
         // console.log(seats)
-        return RandomNum
+        // let RandomSeat = RandomNum.sort((a, b)=>{
+        //     return a - b
+        // });
+        return RandomNum;
+        // return RandomSeat
     }
 
     const count2 = (x) => {
@@ -139,15 +149,13 @@ const SeatingCount = state =>{
                     while(low <= high) {
                         mid = (low + high)/2;
                         if(low !== high) {
-                            if(num < RandomNum[mid]) {
-                                high -= 1
-                            } else if(num > RandomNum[mid]){
-                                low += 1
-                            } else if(num === RandomNum[mid]){
-                                newRandomNum = RandomNum
+                            if(RandomNum[mid] < num) {
+                                low++
+                            } else {
+
                             }
                         } else {
-
+                            newRandomNum = RandomNum;
                         }
                     }
                 }
@@ -167,69 +175,66 @@ const SeatingCount = state =>{
         return RandomNum
     }
 
-    function solution(array, commands) {
-        var answer = [];
-        var preArray = array;
-        var newArray = [];
-        console.log(preArray)
-        for(var i = 0; i < commands[commands.length-1];i++){
-            if(commands[i]===3) {
-                console.log("3개의 명령어를 입력해주세요!");
-                return answer = null
-            }
-            var c1 = commands[i][0];
-            var c2 = commands[i][1];
-            var c3 = commands[i][2];
-            newArray = preArray.splice(c1,c2);
-            let NewAnswer = preArray.slice(c1, c2);
-            if(!answer[0]) {
-                answer = [NewAnswer[c3-1]]
-            } else {
-                answer = [...answer, NewAnswer[c3-1]];
-            }
+    // function solution(array, commands) {
+    //     var answer = [];
+    //     var preArray = array;
+    //     var newArray = [];
+    //     console.log(preArray)
+    //     for(var i = 0; i < commands[commands.length-1];i++){
+    //         if(commands[i]===3) {
+    //             console.log("3개의 명령어를 입력해주세요!");
+    //             return answer = null
+    //         }
+    //         var c1 = commands[i][0];
+    //         var c2 = commands[i][1];
+    //         var c3 = commands[i][2];
+    //         newArray = preArray.splice(c1,c2);
+    //         let NewAnswer = preArray.slice(c1, c2);
+    //         if(!answer[0]) {
+    //             answer = [NewAnswer[c3-1]]
+    //         } else {
+    //             answer = [...answer, NewAnswer[c3-1]];
+    //         }
             
             
-            preArray = newArray;
-            console.log(NewAnswer, answer);
-        }
+    //         preArray = newArray;
+    //         console.log(NewAnswer, answer);
+    //     }
         
-        return answer;
-    }
+    //     return answer;
+    // }
     
-    const seating = async () => {
-        let aaa = await Theater.map(ele => {
-            console.log(ele.exp)
-            count(ele.exp)
-        })
-        return {aaa};
-    }
-    const aaaaa = [1,2,4,7,5,8,10,15,45,23,12]
-    const bbbb = [[3,2,1], [2,3,2],[1,1,2]]
-    useEffect(()=>{
-        solution(aaaaa,bbbb)
-        count(200);
+    // const seating = async () => {
+    //     let aaa = await Theater.map(ele => {
+    //         console.log(ele.exp)
+    //         count(ele.exp)
+    //     })
+    //     return {aaa};
+    // }
+    // const aaaaa = [1,2,4,7,5,8,10,15,45,23,12]
+    // const bbbb = [[3,2,1], [2,3,2],[1,1,2]]
+    const TheaterCheck = ()=> {
         let bbb = []
         for(let i = 0; i < Theater.length; i++) {
+       
             if(!bbb[0]) {
-                bbb = [count(Theater[0].exp)]
+                bbb = [{ seats : count(Theater[0].exp)}]
             } else {
-                bbb = [...bbb,count(Theater[i].exp)]
+                let newBbb = {seats : count(Theater[i].exp)}
+                bbb = [...bbb,newBbb]
             }
         }
-        // const bbb = [
-        //     Theater.map(ele => {
-        //         console.log(ele.exp)
-        //         count(ele.exp)
-        //     })
-
-        // ]
-        // const {aaa} = seating();
         setTSeat(bbb);
+    }
+
+    useEffect(()=>{
+        TheaterCheck();
     },[])
 
     useEffect(()=> {
         console.log(theaterSeat);
     },[theaterSeat])
+    return ({theaterSeat, TheaterCheck});
 }
 
 

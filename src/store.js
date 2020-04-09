@@ -3,6 +3,7 @@ import { createStore } from "redux";
 
 const ADD = "add";
 const CHECK = "check";
+const SEATS = "seats";
 const DELETE = "delete";
 
 const ADD_DATA = data => {
@@ -17,11 +18,18 @@ const CALL_CHECK = refresh => {
         refresh
     }
 }
+const ADD_SEATS = seats => {
+    return {
+        type : SEATS,
+        seats
+    }
+}
 
 const mReducer = ( state, action ) => {
 
     const preDate = localStorage.getItem("date");
     const preData = JSON.parse(localStorage.getItem("data"));
+    const preSeats = JSON.parse(localStorage.getItem("seats"));
 
     console.log(preData)
 
@@ -46,6 +54,14 @@ const mReducer = ( state, action ) => {
 
         return newCheck;
 
+        case SEATS : 
+        const newSeats = Object.assign({}, state, {
+            seats : action.seats
+        })
+        localStorage.setItem("seats", JSON.stringify(newSeats.seats));
+        
+        return newSeats;
+
         default :
         const date = new Date;
         const nowDate = {
@@ -69,18 +85,21 @@ const mReducer = ( state, action ) => {
             state = {
                 data : [1],
                 date : nowDay,
-                refresh : true
+                refresh : true,
+                seats : [1]
             }
         } else {
             state = {
                 data : preData,
                 date : preDate,
-                refresh : false
+                refresh : false,
+                seats : preSeats
             }
         }
         localStorage.setItem("data", JSON.stringify(state.data))
         localStorage.setItem("date", state.date);
-        localStorage.setItem("refresh", state.refresh)
+        localStorage.setItem("refresh", state.refresh);
+        // localStorage.setItem("seats", JSON.stringify(state.seats));
         console.log(state);
         return state
     }
@@ -88,7 +107,8 @@ const mReducer = ( state, action ) => {
 
 export const actionCreators = {
     ADD_DATA,
-    CALL_CHECK
+    CALL_CHECK,
+    ADD_SEATS
 }
 
 

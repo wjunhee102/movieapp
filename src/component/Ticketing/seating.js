@@ -1,10 +1,14 @@
-import React from 'react';
-import seatingCount from './seatingCount';
+import React, { useEffect } from 'react';
+import SeatingCount from './seatingCount';
 import { connect } from 'react-redux';
+import { actionCreators } from '../../store';
 
-function Seating({state}) {
-    const count = seatingCount(state);
-
+function Seating({state,ADD_SEATS}) {
+    const { theaterSeat, TheaterCheck } = SeatingCount();
+    useEffect(()=>{
+        console.log("예매현황", theaterSeat);
+        ADD_SEATS(theaterSeat);
+    },[theaterSeat])
     return (
         <article className="seating">
 
@@ -20,7 +24,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-
+        ADD_SEATS : seats => dispatch(actionCreators.ADD_SEATS(seats))
     }
 }
 
