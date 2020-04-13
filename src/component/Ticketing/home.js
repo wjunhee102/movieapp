@@ -56,7 +56,7 @@ function Ppp({idx, ss}) {
     })
     const color = ()=>{
         if(ss) {
-            let check = ss.find(ele=> ele == idx)
+            let check = ss.find(ele=> ele === idx)
             if(check) {
                 return "#ccc"
             }

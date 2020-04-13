@@ -3,7 +3,7 @@ import SeatingCount from './seatingCount';
 import { connect } from 'react-redux';
 import { actionCreators } from '../../store';
 
-function Seating({state,ADD_SEATS}) {
+function Seating({state, ADD_SEATS}) {
     const { theaterSeat, TheaterCheck } = SeatingCount();
     useEffect(()=>{
         console.log("예매현황", theaterSeat);
